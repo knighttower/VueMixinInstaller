@@ -5,14 +5,14 @@ on:
       - "development"
 jobs:
   tagged-release:
-    name: "Tagged Release"
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Create release
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GIT_TOKEN }}
           prerelease: false
-          files: |
-            ./*
+          files: ./*
           
