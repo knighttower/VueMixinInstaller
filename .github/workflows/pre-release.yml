@@ -4,15 +4,15 @@ on:
     branches:
       - "development"
 jobs:
-  build:
+  tagged-release:
+    name: "Tagged Release"
     runs-on: ubuntu-latest
     steps:
-      - name: Create or update release
-        uses: marvinpinto/action-automatic-releases@latest
+      - name: Create release
+      - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GIT_TOKEN }}
           prerelease: false
           files: |
             ./*
-          body: |
-            ${{ steps.changelog.outputs.changelog }}
+          
