@@ -11,6 +11,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           node-version: '16'
+      - name: Get package version
+        id: package_version
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")" 
+      - name: Get commit message
+        id: commit_message
+        run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.event.after }})"
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -18,4 +24,5 @@ jobs:
           automatic_release_tag: "v${{ steps.package_version.outputs.version }}"
           prerelease: false
           files: ./*
+          body: ${{ steps.commit_message.outputs.message }}
           
