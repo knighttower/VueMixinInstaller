@@ -15,6 +15,7 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GIT_TOKEN }}
+          automatic_release_tag: "v${{ github.event.release.tag_name }}"
           prerelease: false
           files: ./*
           
