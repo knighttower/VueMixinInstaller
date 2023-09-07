@@ -1,7 +1,16 @@
-# VueMixinInstaller
-Helps to install a mixin in Vue 2 or 3 for both options and composition API
+// // -----------------------------------------
+// /**
+//  * @knighttower
+//  * @url knighttower.io
+//  * @git https://github.com/knighttower/
+//  * @license MIT and CC (https://creativecommons.org/licenses/by/4.0/)
+//  * @version 1.0.0
+//  * Attribution: @Carroll Bradford
+//  * @change log
+//  * - 1.0.0 - Converted to typescript and vanilla js
+//  */
+// // -----------------------------------------
 
-```javascript
 /**
  * Supports both, Options & Composition API
  * Use to install mixins that can work with both APIs
@@ -11,12 +20,12 @@ Helps to install a mixin in Vue 2 or 3 for both options and composition API
  * @example
  * In Application
  * 1. Import your mixin into your app
- *    import { installMixin } from '@knighttower/vue-mixin-installer'; //import into your app
+ *    import { installMixin } from 'VueMixinInstaller'; //import into your app
  * 2. register your mixin with the application
  *    app.use(installMixin(ExampleMixinObject<object>, 'NameThatWillBeAssignedToYourMixin'<string>)); //registers your mixin
  * Or Inside your mixin
  *  1. Import into your mixin and use like this
- *      import { installMixin } from '@knighttower/vue-mixin-installer'; //import into your mixin
+ *      import { installMixin } from 'VueMixinInstaller'; //import into your mixin
  *      // ... your mixin code here
  *      export default installMixin(ExampleMixinObject, 'ExportTableHelper'); //exports your mixin
  * 2. Import into your app and use like this
@@ -29,11 +38,16 @@ Helps to install a mixin in Vue 2 or 3 for both options and composition API
  *  
  * @returns {Object} Registration instance used by VUE
  */
-```
+export const installMixin = function (object: Record<string, any>, name: string): any {
+    return {
+        install: (app: any, options?: any) => {
+            // Support for Options API in Vue 2 and 3
+            Object.entries(object).forEach(([key, value]) => {
+                app.config.globalProperties[key] = value;
+            });
 
-## Usage  
-
-``npm install @knighttower/vue-mixin-installer``  
-``yarn add @knighttower/vue-mixin-installer``  
-
-``import { installMixin } from '@knighttower/vue-mixin-installer';``
+            // Support for Composition API only in Vue 3
+            app.provide(name, object);
+        },
+    };
+};
