@@ -36,4 +36,7 @@ Helps to install a mixin in Vue 2 or 3 for both options and composition API
 ``npm install @knighttower/vue-mixin-installer``  
 ``yarn add @knighttower/vue-mixin-installer``  
 
-``import { installMixin } from '@knighttower/vue-mixin-installer';``
+``import { installMixin } from '@knighttower/vue-mixin-installer';``  
+
+## Other
+Checkout my profile https://github.com/knighttower or https://knighttower.io for more cool freebies and awesome VUE/Laravel/PHP projects
