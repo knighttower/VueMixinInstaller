@@ -1,0 +1,24 @@
+name: "release version"
+on:
+  push:
+    branches:
+      - "development"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - name: Generate changelog
+        uses: github-changelog-generator/github-changelog-generator@v1.16.0
+        with:
+          future-release: latest
+      - name: Create or update release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GIT_TOKEN }}
+          prerelease: false
+          files: |
+            ./*
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
